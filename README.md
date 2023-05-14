@@ -1,4 +1,4 @@
-<include a CircleCI status badge, here>
+[![vyvtt](https://circleci.com/gh/ductruong253/devOps_microservices.svg?style=svg)](https://app.circleci.com/pipelines/github/vyvtt/uda-project-4)
 
 ## Project Overview
 
