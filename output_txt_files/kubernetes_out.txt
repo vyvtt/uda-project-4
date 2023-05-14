@@ -1,0 +1,46 @@
+1. run_kubernetes.sh log:
+$ ./run_kubernetes.sh
+pod/uda-project-4 created
+NAME            READY   STATUS    RESTARTS   AGE
+uda-project-4   0/1     Pending   0          0s
+$ ./run_kubernetes.sh
+Error from server (AlreadyExists): pods "uda-project-4" already exists
+NAME            READY   STATUS    RESTARTS   AGE
+uda-project-4   1/1     Running   0          88s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+Handling connection for 8000
+
+2. Output of make_prediction.sh:
+$ ./make_prediction.sh
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+
+3. Kubernete's pod log:
+$ kubectl logs uda-project-4
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 709-905-843
+127.0.0.1 - - [14/May/2023 07:20:46] "GET / HTTP/1.1" 200 -
+[2023-05-14 07:21:05,751] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2023-05-14 07:21:05,768] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-05-14 07:21:05,777] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-05-14 07:21:05,780] INFO in app: Result Prediction: 
+[20.35373177134412]
+127.0.0.1 - - [14/May/2023 07:21:05] "POST /predict HTTP/1.1" 200 -
